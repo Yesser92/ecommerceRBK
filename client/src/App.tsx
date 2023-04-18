@@ -1,6 +1,8 @@
 import { Route, Routes } from 'react-router-dom'
 import  "bootstrap/dist/css/bootstrap.css";
 import './App.css'
+import StripeContainer from './components/stripe/Stripe'
+
 
 import { ShoppingCartProvider } from './context/ShoppingCartContext'
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/home" element={<Home  />} />
           <Route path='/store' element={<Store />} />
           <Route path="/about" element={<About />} />
+          <Route path="/checkout" element={<StripeContainer />} />
+
         </Routes>
       </main>
     </ShoppingCartProvider>
