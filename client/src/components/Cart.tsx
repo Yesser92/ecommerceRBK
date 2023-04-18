@@ -5,6 +5,8 @@ import { BiHappyHeartEyes } from "react-icons/bi";
 import CartCard from "./CartCard";
 import { formatCurrency } from "../utilities/formatCurrency";
 import storeItems from "../data/products.json";
+import { useNavigate } from 'react-router-dom';
+
 
 type CartItem = {
   id: number;
@@ -20,6 +22,13 @@ type ShoppingCartProps = {
 };
 
 const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
+  const navigate = useNavigate(); // Get the history object from react-router-dom
+
+  // Handle button click
+  const handleCheckout = () => {
+    
+    navigate('/checkout');
+  };
   return (
     <div className="fixed bottom-0 left-0 w-full h-full flex items-center justify-center z-9999">
       <div className="relative w-1/2 bg-blue-200 shadow-xl p-3">
@@ -63,7 +72,7 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
                 }, 0)
               )}
             </strong>
-            <button className="py-1 float-right px-3 rounded bg-red-50 text-red-400 hover:shadow-sm hover:bg-white duration-300 font-semibold">
+            <button   onClick={handleCheckout} className="py-1 float-right px-3 rounded bg-red-50 text-red-400 hover:shadow-sm hover:bg-white duration-300 font-semibold">
               Checkout
             </button>
           </>
