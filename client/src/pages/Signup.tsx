@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
+import axios from 'axios'
 import "tailwindcss/tailwind.css";
 
 const Signup = () => {
@@ -18,16 +19,14 @@ const Signup = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        console.log(user);
-        navigate("/login");
-        // ...
-        //post the newuser into database with axios
+        navigate("/login"); 
+        //register the newuser into database (customers table)
+        axios.post("http://localhost:3000/customers",{name:name,email:email})
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        // ..
       });
   };
 
@@ -36,7 +35,7 @@ const Signup = () => {
       <section className="max-w-md mx-auto p-6 bg-white rounded-md shadow-md">
         <div>
           <div>
-            <h1 className="text-3xl font-bold mb-4">Create your account</h1>
+            <h1 className="text-3xl font-bold mb-4">Sign up</h1>
             <form>
               <div className="mb-4">
                 <label className="block font-medium mb-2">User Name</label>
@@ -85,7 +84,7 @@ const Signup = () => {
                 onClick={onSubmit}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                Create account
+                Sign up
               </button>
             </form>
 
