@@ -2,9 +2,40 @@ const express = require("express");
 
 const connection = require("../database/index.js");
 const app = express();
-const port = 3000;
 var db = require("../database");
 const cors = require("cors");
+require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const port = 3000;
+const bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(express.json());
+app.use(cors());
+
+app.post("/stripe/charge", async (req, res) => {
+    let { amount, id } = req.body;
+    console.log("amount & id:", amount, id);
+    try {
+        const payment = await stripe.paymentIntents.create({
+            amount: amount,
+            currency: "EUR",
+            description: "",
+            payment_method: id,
+            confirm: true,
+        });
+        res.json({
+            message: "Payment successful",
+            success: true,
+        });
+    } catch (error) {
+        console.log("error", error);
+        res.json({
+            message: "Payment failed",
+            success: false,
+        });
+    }
+});
 
 app.use(express.json());
 app.use(cors());

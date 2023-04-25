@@ -2,7 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
-const port = 3000;
+const port = 8080;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -147,7 +147,7 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });*/
 
-app.listen(process.env.PORT ||8080, ()=>{
+app.listen(8080, ()=>{
     console.log("serv demaree")
 })
 ;
