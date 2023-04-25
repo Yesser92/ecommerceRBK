@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`customers` (
   `email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idcustomers`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+AUTO_INCREMENT = 9
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`products` (
     FOREIGN KEY (`idcategory`)
     REFERENCES `ecommerce`.`category` (`idcategory`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 18
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`orders` (
     FOREIGN KEY (`id_customers`)
     REFERENCES `ecommerce`.`customers` (`idcustomers`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 16
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -92,7 +92,6 @@ CREATE TABLE IF NOT EXISTS `ecommerce`.`orderitems` (
   `quantity` INT NOT NULL,
   `price` DECIMAL(10,2) NOT NULL,
   `idproducts` INT NOT NULL,
-  `orderitemscol1` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id_orderitems`),
   INDEX `order_id_idx` (`order_id` ASC) VISIBLE,
   INDEX `idproducts_idx` (`idproducts` ASC) VISIBLE,
