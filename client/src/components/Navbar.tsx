@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { RiShoppingCartLine, RiShoppingCartFill } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 import { useShoppingCart } from "../context/ShoppingCartContext";
@@ -7,8 +7,6 @@ import Cart from "./Cart";
 const Navbar: React.FC = () => {
   const { cartItems, cartQuantity, isOpen, handleClickCart } =
     useShoppingCart();
-
-  const [user, setUser] = useState("");
 
   return (
     <nav className="shadow-sm px-3 bg-white sticky top-0">
@@ -48,9 +46,8 @@ const Navbar: React.FC = () => {
                 About
               </NavLink>{" "}
             </li>
-
-           
-            <li className="ml-auto">
+            <li>
+              {" "}
               <NavLink
                 className="px-3 py-3 hover:text-red-300 duration-300"
                 to={"/signup"}
@@ -59,6 +56,7 @@ const Navbar: React.FC = () => {
               </NavLink>{" "}
             </li>
             <li>
+              {" "}
               <NavLink
                 className="px-3 py-3 hover:text-red-300 duration-300"
                 to={"/login"}
@@ -66,13 +64,6 @@ const Navbar: React.FC = () => {
                 Login
               </NavLink>{" "}
             </li>
-             {/* Conditionally render the greeting and user's name */}
-             {user && (
-              <li className="px-3 py-3">
-                Hello, {user}!
-              </li>
-            )}
-
           </ul>
         </div>
         <button

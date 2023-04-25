@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserProvider';
+
+
 
 const Login = () => {
+  const { setContextEmail } = useContext(UserContext)
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,13 +15,12 @@ const Login = () => {
 
   const onLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setContextEmail(email);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         navigate('/store');
-        setEmail('');
-        setPassword('');
         console.log(user);
       })
       .catch((error) => {
