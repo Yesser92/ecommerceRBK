@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from 'axios';
+import { CountryDropdown } from 'react-country-region-selector';
 import Stripe from './Stripe';
+import '../../CheckoutForm.css';
+import { Form, Button } from 'react-bootstrap';
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -14,13 +21,20 @@ const CheckoutForm = () => {
     }
     const cardElement = elements.getElement(CardElement);
     if (!cardElement) {
-      // Handle case when cardElement is null
+      
       return;
     }
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: cardElement,
+      billing_details: {
+        name,
+        email,
+        address: {
+          country: "US"
+        },
+      },
     });
 
     if (!error) {
@@ -42,41 +56,66 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xs mx-auto">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="card-element">
-            Credit or debit card
-          </label>
-          <CardElement
-            id="card-element"
-            options={{
-              style: {
-                base: {
-                  fontSize: '16px',
-                  color: '#424770',
-                  '::placeholder': {
-                    color: '#aab7c4',
-                  },
-                },
-                invalid: {
-                  color: '#9e2146',
-                },
-              },
-              hidePostalCode: true,
-            }}
+
+
+    <div className="checkout-container w-1/3">
+
+
+      &nbsp;
+      &nbsp;
+
+      <Form onSubmit={handleSubmit} className="payment-form">
+        <Form.Group controlId="name">
+          <Form.Label><strong>Name on Card:</strong></Form.Label>
+          <Form.Control
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="John Doe"
+            required
           />
-        </div>
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Pay
-          </button>
-        </div>
-      </div>
-    </form>
+        </Form.Group>
+        &nbsp;
+
+        <Form.Group controlId="email">
+          <Form.Label><strong>Email:</strong></Form.Label>
+          <Form.Control
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="johndoe@example.com"
+            required
+          />
+        </Form.Group>
+        &nbsp;&nbsp;
+
+        <Form.Group controlId="country">
+          <Form.Label><strong>Country:</strong></Form.Label>
+          <CountryDropdown
+            value={country}
+            onChange={(val) => setCountry(val)}
+            className="form-control"
+            required
+          />
+        </Form.Group>
+        &nbsp;
+
+        <Form.Group controlId="card">
+
+          <Form.Label><strong>Card Information:</strong></Form.Label>
+
+          &nbsp;
+          <CardElement
+
+          />
+        </Form.Group>
+        <br />
+        &nbsp;
+
+        <Button variant="primary" type="submit" >Pay</Button>
+      </Form>
+
+    </div>
   );
 };
 
