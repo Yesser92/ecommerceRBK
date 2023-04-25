@@ -5,50 +5,50 @@ import { useNavigate } from 'react-router-dom';
 import {  signOut } from "firebase/auth";
 
 const Home:React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(()=>{
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true);
-        console.log("uid", user.uid);
-      } else {
-        setIsLoggedIn(false);
-        console.log("user is logged out");
-      }
-      setIsLoading(false);
-    });
-  }, []);
-
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      navigate("/login");
-      console.log("Signed out successfully");
-    } catch (error) {
-      console.error(error);
+ 
+    useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              // User is signed in, see docs for a list of available properties
+              // https://firebase.google.com/docs/reference/js/firebase.User
+              const uid = user.uid;
+              // ...
+              console.log("uid", uid)
+            } else {
+              // User is signed out
+              // ...
+              console.log("user is logged out")
+            }
+          });
+         
+    }, [])
+ 
+    const navigate = useNavigate();
+ 
+    const handleLogout = () => {               
+        signOut(auth).then(() => {
+        // Sign-out successful.
+            navigate("/");
+            console.log("Signed out successfully")
+        }).catch((error) => {
+        // An error happened.
+        });
     }
-  }
-
   return (
     <section>        
-      <nav>
-        {isLoading && <p>Loading...</p>}
-        {!isLoading && !isLoggedIn && <h2 className='font-bold'>You are not logged In</h2>}
-        {!isLoading && isLoggedIn && (
-          <>
-            <p>Welcome Home</p>
-            <div>
-              <button onClick={handleLogout}>Logout</button>
-            </div>
-          </>
-        )}
-      </nav>
+       <nav>
+                <p>
+                    Welcome Home
+                </p>
+ 
+                <div>
+        			<button onClick={handleLogout}>
+                        Logout
+                    </button>
+        		</div>
+            </nav>
     </section>
   )
 }
  
-export default Home;
+export default Home
