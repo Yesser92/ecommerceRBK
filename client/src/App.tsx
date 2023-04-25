@@ -11,7 +11,6 @@ import { UserProvider } from './context/UserProvider';
 import { Cart, Navbar } from './components'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
-
 // =========== import pages =============
 import { About, Home, Store } from './pages'
 

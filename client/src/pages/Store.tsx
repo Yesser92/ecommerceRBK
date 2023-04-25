@@ -4,6 +4,7 @@ import Card from "../components/Card";
 
 // import products from "../data/products.json";
 import FilterStore from "../components/FilterStore";
+import Footer from "../components/Footer";
 interface product {
   idproducts: number;
   name_product: string;
@@ -86,7 +87,9 @@ const Store: React.FC = () => {
           </section>
         )}
       </div>
+      <Footer />
     </div>
+   
   );
 };
 
