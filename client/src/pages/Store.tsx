@@ -2,7 +2,7 @@ import React, { MouseEventHandler, useState } from "react";
 import Card from "../components/Card";
 import products from "../data/products.json";
 import FilterStore from "../components/FilterStore";
-
+import Footer from "../components/Footer";
 interface product {
   id: number;
   category: string;
@@ -49,7 +49,8 @@ const Store: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto mt-2">
+    <div>
+      <div className="container mx-auto mt-2">
       <div className="flex">
         <div className="w-2/12 fixed top-0 left-0">
           <FilterStore
@@ -81,6 +82,8 @@ const Store: React.FC = () => {
         )}
         </div>
       </div>
+    </div>
+    <Footer/>
     </div>
   );
 };

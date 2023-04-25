@@ -10,7 +10,6 @@ import { ShoppingCartProvider } from './context/ShoppingCartContext'
 import { Navbar } from './components'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
-
 // =========== import pages =============
 import { About, Home, Store } from './pages'
 
@@ -29,7 +28,6 @@ function App() {
           <Route path='/store' element={<Store />} />
           <Route path="/about" element={<About />} />
           <Route path="/checkout" element={<StripeContainer />} />
-
         </Routes>
       </main>
     </ShoppingCartProvider>

@@ -46,7 +46,7 @@ const FilterStore: React.FC<FilterStoreProps> = ({
 
   return (
     <div className="bg-gray-60 h-screen fixed left-0 top-12 w-2/12 p-4">
-      <h3 className="text-blue-900 px-3 text-xl font-mono font-bold italic flex items-left">
+      <h3 className="text-blue-600 px-3 text-2xl font-mono font-bold italic flex items-left">
         CATEGORIES
       </h3>
       <h6
@@ -62,7 +62,7 @@ const FilterStore: React.FC<FilterStoreProps> = ({
       </h6>
       {categories.map((category: string, i: number) => (
         <h6
-          className={`text-blue-600 font-bold cursor-pointer mb-2 ${
+          className={`text-blue-600 font-sans hover:font-serif font-bold cursor-pointer mb-2 ${
             selectedCategory === category ? "text-orange-500" : ""
           }`}
           key={i}
@@ -72,7 +72,7 @@ const FilterStore: React.FC<FilterStoreProps> = ({
         </h6>
       ))}
       <div className="mt-8">
-        <h3 className="text-blue-900 px-3 text-xl font-mono font-bold italic flex items-left">
+        <h3 className="text-blue-600 px-3 text-xl font-mono font-bold italic flex items-left">
           FILTER BY PRICE
         </h3>
         <div className="flex items-center mb-2">
