@@ -82,7 +82,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         })
     }
 
-    const cartQuantity = cartItems.reduce((quantity, item) =>quantity+=item.quantity , -1) 
+    const cartQuantity = cartItems.reduce((quantity, item) =>quantity+=item.quantity , 0) 
 
     return (
         <ShoppingCartContext.Provider 
