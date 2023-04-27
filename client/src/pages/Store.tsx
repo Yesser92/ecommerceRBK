@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../components/Card";
-
-// import products from "../data/products.json";
 import FilterStore from "../components/FilterStore";
 import Footer from "../components/Footer";
 interface product {
