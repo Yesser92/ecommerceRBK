@@ -1,4 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import  { useEffect, useState, useContext } from "react";
+import {useNavigate} from 'react-router-dom'
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51MuBUfAENZQfhpXuR5ZOQU2IiYmN8uDJD1KuGafCutrFeREiPNWwSedV4qjKUkoxEe3ETpV7zK5c7qPNArTLyHnc000K1KYTlw');
 import axios from "axios";
 import { UserContext } from "../context/UserProvider";
 import { AiOutlineCloseCircle } from "react-icons/ai";
@@ -6,8 +11,8 @@ import { FaRegSadCry } from "react-icons/fa";
 import { BiHappyHeartEyes } from "react-icons/bi";
 import CartCard from "./CartCard";
 import { formatCurrency } from "../utilities/formatCurrency";
-import storeItems from "../data/products.json";
-import { useNavigate } from 'react-router-dom';
+
+import StripeContainer from "./StripeContainer";
 
 type customers = {
   idcustomers: number;
@@ -39,8 +44,10 @@ type ShoppingCartProps = {
 const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
 
   //storeItems fetched from the server( products table)
+  const navigate=useNavigate()
   const [storeItems, setStoreItems] = useState<storeItem[]>([]);
   const [customers, setCustomers] = useState<customers[]>([]);
+  const [pay, setPay] = useState<boolean>(false);
   useEffect(() => {
     axios
       .get("http://localhost:3000/products")
@@ -62,6 +69,7 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
   )?.idcustomers;
 
   const handlePurchase = async () => {
+    console.log("handlePurchase called")
     const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
     const getPrice = (itemId: number) => {
       return storeItems.find((e) => e.idproducts === itemId)?.price;
@@ -91,7 +99,7 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
       });
     });
     alert("order registred in the database , and products quantities updated accordingly");
-    cartItems=[]
+  
     console.log(cartItems)
   };
 
@@ -195,10 +203,16 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
           </strong>
           <button
             className="py-1 float-right px-3 rounded bg-red-50 text-red-400 hover:shadow-sm hover:bg-white duration-300 font-semibold"
-            onClick={handlePurchase}
+            onClick={()=>{setPay(true)}}
           >
             Checkout
           </button>
+
+          {pay?<div className="container" style={{margin:"5%"}}>
+            <h3 style={{textAlign:"center", color:"blue"}}>Please fill your card details</h3>
+            <Elements stripe={stripePromise}>
+      <StripeContainer amount={total} handlePurchase={handlePurchase}/>
+    </Elements></div>:null}
         </>
       )}
     </div>

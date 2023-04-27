@@ -17,6 +17,7 @@ import { About, Home, Store } from './pages'
 
 
 
+
 function App() {
   
   return (
@@ -32,7 +33,6 @@ function App() {
           <Route path='/store' element={<Store />} />
           <Route path="/about" element={<About />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<StripeContainer />} />
         </Routes>
       </main>
     </ShoppingCartProvider>
