@@ -1,5 +1,7 @@
 const express = require("express");
-
+const stripe = require("stripe")(
+  'sk_test_51MuBUfAENZQfhpXuCAuCKmWKs6TXL3aIrBEmwaRdHamou1wkjV5VPOmjyI6EiKuO10MA1Magjtvg1LGDDgeXgovt00mPaGSRXE'
+);
 const connection = require("../database/index.js");
 const app = express();
 const port = 3000;
@@ -125,6 +127,21 @@ app.post("/order/items", (req, res) => {
     }
   );
 });
+// payment with stripe
+
+
+app.post('/create-payment-intent', async (req, res) => {
+  const {amount}=req.body
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: 'usd',
+    });
+    res.status(200).json({ paymentIntent });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error creating payment intent' });
+  }})
 
 // Start the server
 app.listen(port, () => {
