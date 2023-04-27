@@ -27,7 +27,6 @@ type storeItem = {
   price: number;
 };
 
-
 type CartItem = {
   id: number;
   quantity: number;
@@ -42,7 +41,6 @@ type ShoppingCartProps = {
 };
 
 const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
-
   //storeItems fetched from the server( products table)
   const navigate=useNavigate()
   const [storeItems, setStoreItems] = useState<storeItem[]>([]);
@@ -79,7 +77,7 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
       totalprice: total,
       id_customers: idcustomer,
     });
-    
+
     let lastId = 0;
 
     await axios
@@ -103,36 +101,11 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
     console.log(cartItems)
   };
 
-  return (
-    <div className="fixed w-3/4 top-0 h-full left-0 bg-white shadow-2xl p-3 z-50">
-      <button
-        onClick={() => handleClickCart()}
-        className="absolute top-3 right-3"
-      >
-        <AiOutlineCloseCircle />
-      </button>
-      <h1 className="text-center text-xl font-semibold italic mb-2 text-red-300">
-        Cart
-      </h1>
-      <hr />
-      {cartItems.length == 0 ? (
-        <>
-          <p className="text-center text-slate-500 mt-4 flex items-center justify-center">
-            Your cart is empty <FaRegSadCry className="ml-2" />
-          </p>
-          <div>
-            <button
-              onClick={() => handleClickCart()}
-              className="text-center mx-auto mt-4 flex items-center justify-center text-red-300 bg-red-50 px-4 py-1 rounded-lg hover:shadow-sm hover:bg-white duration-300"
-            >
-              Add some <BiHappyHeartEyes className="ml-2" />
-
   const navigate = useNavigate(); // Get the history object from react-router-dom
 
   // Handle button click
   const handleCheckout = () => {
-    
-    navigate('/checkout');
+    navigate("/checkout");
   };
   return (
     <div className="fixed bottom-0 left-0 w-full h-full flex items-center justify-center z-9999">
@@ -172,14 +145,18 @@ const Cart = ({ handleClickCart, cartItems }: ShoppingCartProps) => {
               Total:{" "}
               {formatCurrency(
                 cartItems.reduce((total, cartItem) => {
-                  const item = storeItems.find((i) => i.id === cartItem.id);
+                  const item = storeItems.find(
+                    (i) => i.idproducts === cartItem.id
+                  );
                   return total + (item?.price || 0) * cartItem.quantity;
                 }, 0)
               )}
             </strong>
-            <button   onClick={handleCheckout} className="py-1 float-right px-3 rounded bg-red-50 text-red-400 hover:shadow-sm hover:bg-white duration-300 font-semibold">
+            <button
+              className="py-1 float-right px-3 rounded bg-red-50 text-red-400 hover:shadow-sm hover:bg-white duration-300 font-semibold"
+              onClick={handlePurchase}
+            >
               Checkout
-
             </button>
           </div>
         </>

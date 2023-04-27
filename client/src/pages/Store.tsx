@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "../components/Card";
 import FilterStore from "../components/FilterStore";
+import Footer from "../components/Footer";
 interface product {
   idproducts: number;
   name_product: string;
@@ -84,7 +85,9 @@ const Store: React.FC = () => {
           </section>
         )}
       </div>
+      <Footer />
     </div>
+   
   );
 };
 
