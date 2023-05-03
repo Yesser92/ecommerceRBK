@@ -1,46 +1,15 @@
 const express = require("express");
 const stripe = require("stripe")(
-  'sk_test_51MuBUfAENZQfhpXuCAuCKmWKs6TXL3aIrBEmwaRdHamou1wkjV5VPOmjyI6EiKuO10MA1Magjtvg1LGDDgeXgovt00mPaGSRXE'
+  'sk_test_51MwW2YKqLFfv80mnKqfe0Wb52NPtxT6tjyQKpL0PGC4ubBEpj2gjTsTptbPozhA7TDKbpACQhlxa1c62TYl4kQt800y5j81RXA'
 );
-const connection = require("../database/index.js");
 const app = express();
+const port = 3000;
 var db = require("../database");
 const cors = require("cors");
-require("dotenv").config();
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const port = 3000;
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(cors());
-
-app.post("/stripe/charge", async (req, res) => {
-    let { amount, id } = req.body;
-    console.log("amount & id:", amount, id);
-    try {
-        const payment = await stripe.paymentIntents.create({
-            amount: amount,
-            currency: "EUR",
-            description: "",
-            payment_method: id,
-            confirm: true,
-        });
-        res.json({
-            message: "Payment successful",
-            success: true,
-        });
-    } catch (error) {
-        console.log("error", error);
-        res.json({
-            message: "Payment failed",
-            success: false,
-        });
-    }
-});
 
 app.use(express.json());
 app.use(cors());
+
 
 // Define customers list
 app.get("/customers", (req, res) => {
@@ -166,7 +135,7 @@ app.post('/create-payment-intent', async (req, res) => {
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
-      currency: 'usd',
+      currency: 'eur',
     });
     res.status(200).json({ paymentIntent });
   } catch (error) {

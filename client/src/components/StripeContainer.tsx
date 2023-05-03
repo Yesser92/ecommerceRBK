@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import Stripe from "stripe";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios, { AxiosError } from "axios";
+import "../CheckoutForm.css"
+import { Form, Button } from 'react-bootstrap';
+import { CountryDropdown } from 'react-country-region-selector';
+
+
 
 interface StripeContainerProps {
   amount: number;
@@ -16,6 +21,8 @@ const StripeContainer: React.FC<StripeContainerProps> = ({ amount ,handlePurchas
   const [processing, setProcessing] = useState<boolean>(false);
   const stripe = useStripe();
   const elements = useElements();
+  const [country, setCountry] = useState("");
+
 
   useEffect(() => { 
     // Convert the amount to cents
@@ -68,12 +75,36 @@ const StripeContainer: React.FC<StripeContainerProps> = ({ amount ,handlePurchas
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <CardElement />
-      <button type="submit" disabled={processing}>
-        {processing ? 'Processing...' : 'Pay Now'}
-      </button>
-    </form>
+    <div className="checkout-container mx-auto col-10 col-md-8 col-lg-6">
+     
+
+      <Form onSubmit={handleSubmit} className="payment-form">
+      &nbsp;
+        <Form.Group controlId="country">
+          <CountryDropdown
+            value={country}
+            onChange={(val) => setCountry(val)}
+            className="form-control"
+            required
+          />
+        </Form.Group>
+
+        <Form.Group controlId="card">
+
+
+          <CardElement
+          
+
+          />
+        </Form.Group>
+       
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+        <Button type="submit" style={{backgroundColor: 'blue', color: 'white'}}>Pay</Button>
+
+      </Form>
+
+    </div>
   );
 };
 

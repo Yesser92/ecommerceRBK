@@ -1,6 +1,6 @@
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { formatCurrency } from "../utilities/formatCurrency";
-
+import "../card.css"
 type ProductProps = {
   id: number;
   name_product: string;
@@ -12,7 +12,7 @@ type ProductProps = {
 const Card = ({ id, name_product, price, image_url, quantity }: ProductProps) => {
   const { increaseCartQuantity } = useShoppingCart();
   return (
-    <div className="bg-white rounded shadow-sm">
+    <div   className="cardd">
       <img src={image_url} alt={name_product} className="h-60  rounded-t" />
       <div className="p-3">
         <h2 className="title text-sm font-semibold">{name_product}</h2>
